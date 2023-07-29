@@ -4,6 +4,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { Link, useNavigate } from 'react-router-dom';
 import {auth,provider} from "../Components/FireBase/Firebase"
+
 import axios from 'axios';
 import {signInWithPopup} from "firebase/auth"
 import validator from 'validator';
@@ -27,6 +28,7 @@ export default function Login() {
   
     signInWithPopup(auth,provider).then((result)=>{
       axios.post("/auth/google",{username:result.user.displayName ,email:result.user.email,profilePic:result.user.photoURL}).then((e)=>{
+        
         if(e.data.status==true){
           toast.success(e.data.message)
           navigate("/home")

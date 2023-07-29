@@ -8,6 +8,7 @@ import axios from 'axios';
 
 import { Routes, Route } from "react-router-dom";
 import SingleBlog from './Pages/SingleBlog';
+import CreateBlog from './Pages/CreateBlog';
 axios.defaults.baseURL = import.meta.env.VITE_PORT;
 axios.defaults.withCredentials = true;
 
@@ -20,6 +21,7 @@ function App() {
         <Route path='/' element={<Home/>}/>
         <Route path='/blog/:id' element={<SingleBlog/>}/>
         <Route path='/login' element={<Login/>}/>
+        <Route path='/create' element={<CreateBlog/>}/>
         <Route path='/signup' element={<Register/>}/>
       </Routes>
 

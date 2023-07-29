@@ -6,12 +6,14 @@ import CardMedia from '@mui/material/CardMedia';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import SendIcon from '@mui/icons-material/Send';
 import MapsUgcIcon from '@mui/icons-material/MapsUgc';
-import Input from '@mui/joy/Input';
-import AddIcon from '@mui/icons-material/Add';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function BlogCard() {
     const [Hert,setHert]=useState(false)
+
+
 
     return (
         <Box sx={{ marginX: '3rem', background: '',width:'25rem',paddingY:'20px',cursor:'pointer'}}>
@@ -35,10 +37,11 @@ export default function BlogCard() {
                     title="green iguana" />
 
                 <Box>
-                    <Box sx={{ display: 'flex', gap: 3, margin: '5px' }}><FavoriteBorderIcon onClick={()=>{setHert(!Hert)}} sx={{color:Hert?"red":"",cursor:'pointer'}} /><MapsUgcIcon onClick={()=>{setDialogOpen(true)}} sx={{cursor:'pointer'}}  /><SendIcon sx={{cursor:'pointer'}} /></Box>
+                    <Box sx={{ display: 'flex', gap: 3, margin: '5px' }}><FavoriteBorderIcon onClick={()=>{setHert(!Hert)}} sx={{color:Hert?"red":"",cursor:'pointer'}} /><MapsUgcIcon onClick={()=>{setDialogOpen(true)}} sx={{cursor:'pointer'}}  /></Box>
                 </Box>
                 <Box sx={{ margin: '5px', paddingBottom:'1rem'}}>
-                    <Typography sx={{fontWeight:600}}>125,546 views</Typography>
+                    <Typography sx={{fontWeight:600}}>Title</Typography>
+                    <Typography sx={{color:'#8a8a8a'}}>Category</Typography>
                     <Typography>Lorem ipsum dolor sit amet,e, illum repudiandae. Harum minus rerum expedita pariatur aut. At nulla deleniti repellat qui reprehenderit ab vel quae, accusantium et explicabo.</Typography>
                 
                 </Box>

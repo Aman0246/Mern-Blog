@@ -17,7 +17,7 @@ router.post("/register", async (req, res) => {
     if (!validator.isEmail(req.body.email)) {
       return res.status(200).send({ status: false, message: "invalid Email" });
     }
-    console.log("awsUrl")
+    // console.log("awsUrl")
     let hpassword= await hassPassword(req.body.password)
     if(req.file!=undefined){
       let awsUrl = await uploadFile(req.file);
@@ -48,9 +48,9 @@ router.post("/register", async (req, res) => {
 });
 
 //LOGIN
-router.post("/login", async (req, res) => {
+router.post("/login", async (req,res) => {
   try {
-    console.log("req.body")
+    console.log('aman')
     const user = await User.findOne({ email: req.body.email });
     if (!validator.isEmail(req.body.email)) {
       return res.status(200).send({ status: false, message: "invalid Email" });
@@ -72,14 +72,14 @@ router.post("/login", async (req, res) => {
 });
 
 //Google
-router.post("/google", async (req, res) => {
+router.post("/google", async (req,res) => {
+  console.log("hellow")
 try {
      const user=await User.findOne({email:req.body.email})
      if(user){
       var token =jwt.sign({id:user._id},process.env.JWT)
       res.cookie("access_token",token,{httpOnly:true}).send({status:true,message:"Login Successfull",data:user,token:token})
      }
-  
      else{
       const newUser= new User({
           ...req.body,
@@ -93,7 +93,7 @@ try {
      }
      
   } catch (err) {
-      console.log(err)
+    res.send({status:false,message:" Successfull unsuccessfull"})
   }
 
 })
