@@ -6,10 +6,13 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios'
 import toast from 'react-hot-toast';
+import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
+import CommentPage from './CommentPage';
 export default function SingleBlog() {
   let params=useParams()
   const[open,setopen]=useState(false)
   const[data,setdata]=useState('')
+  const [comment,setcomment]=useState(false)
   const navigate=useNavigate()
   const handleDelete=async()=>{
     await axios.delete(`/posts/${params.id}`).then((e)=>{
@@ -40,6 +43,8 @@ export default function SingleBlog() {
   // console.log(data)
   return (
     <Box sx={{marginTop:'10vh'}}>
+      <Box title='Comments' sx={{position:'absolute',right:'20px',color:'#bc6565'}}><QuestionAnswerIcon onClick={()=>setcomment(true)}  sx={{cursor:'pointer',fontSize:'50px'}}/></Box>
+     <CommentPage comment={comment} setcomment={setcomment} data={data}/>
       <Box sx={{justifyContent:'center',alignItems:'center',paddingTop:'2rem',display:'flex'}}><img style={{width:'30rem',maxWidth:'100%',maxHeight:'100%'}} src={data.photo} alt="blogPhoto"/></Box>    
       <Box sx={{justifyContent:'center',alignItems:'left',display:'flex',padding:'5px 20px',flexDirection:'column'}}>
              <Box sx={{fontSize:'5rem',color:'#545151'}}>{data.title && data.title.length > 20 ? `${data.title.slice(0, 20)}...` : data.title}</Box>
@@ -48,9 +53,10 @@ export default function SingleBlog() {
         <Box sx={{display:'flex',justifyContent:'space-between'}}>
              <Box sx={{fontSize:'1.7rem',color:'#c4aa0e',marginTop:'10px'}}>{data.username}</Box>
              <Box sx={{display:'flex'}}>
-             <EditIcon  onClick={()=>{setopen(true)}} sx={{cursor:'pointer',color:'#8a8a8a',fontSize:'40px'}}/>
-                  <Edit open={open} data={data} setopen={setopen} ></Edit>
-                  <Box ><DeleteForeverIcon onClick={handleDelete} sx={{cursor:'pointer',color:'#f94f4f',fontSize:'40px'}}/></Box>
+             <EditIcon title="Edit" onClick={()=>{setopen(true)}} sx={{cursor:'pointer',color:'#8a8a8a',fontSize:'40px'}}/>
+ 
+                  <Edit  open={open} data={data} setopen={setopen} ></Edit>
+                  <Box title="Delete" ><DeleteForeverIcon title="" onClick={handleDelete} sx={{cursor:'pointer',color:'#f94f4f',fontSize:'40px'}}/></Box>
              </Box>
 
         </Box>
