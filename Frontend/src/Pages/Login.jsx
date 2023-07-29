@@ -4,12 +4,13 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { Link, useNavigate } from 'react-router-dom';
 import {auth,provider} from "../Components/FireBase/Firebase"
-
 import axios from 'axios';
 import {signInWithPopup} from "firebase/auth"
-import validator from 'validator';
+
 import toast from 'react-hot-toast';
 import GoogleIcon from '@mui/icons-material/Google';
+import { useDispatch, useSelector,} from 'react-redux'
+import {loginSuccess} from "../Redux/userSlice"
 
 const inputsStructure={
   username:'',
@@ -20,6 +21,7 @@ const inputsStructure={
 
 export default function Login() {
   const navigate=useNavigate()
+  const dispatch=useDispatch()
   const [inputs,setinputs]=useState(inputsStructure)
   const handleChange=(e)=>{  
     setinputs({...inputs,[e.target.name]:e.target.value})
@@ -31,7 +33,9 @@ export default function Login() {
         
         if(e.data.status==true){
           toast.success(e.data.message)
-          navigate("/home")
+          dispatch(loginSuccess(e.data.data))
+          localStorage.setItem('id',true)
+          navigate("/")
         }
         if(e.data.status==false){
           return toast.error(e.data.message)
@@ -41,16 +45,16 @@ export default function Login() {
       })
     }).catch((e)=>{console.log(e)})}
   const handleLogin=async()=>{
-    if(!validator.isEmail(inputs.Email)){
-      return  toast.error("invalid Email")
-    }
+    
     if(inputs.Email==0 || inputs.password.length==0){
       return  toast.error("Empty Field")
     }
-    validator.isEmail('foo@bar.com'); 
+  
       await axios.post("/auth/login",{...inputs}).then((e)=>{
         if(e.data.status==false){return toast.error(e.data.message)}
         if(e.data.status==true){
+          localStorage.setItem('id',true)
+          dispatch(loginSuccess(e.data.data))
           navigate('/')
            toast.success(e.data.message)}
         

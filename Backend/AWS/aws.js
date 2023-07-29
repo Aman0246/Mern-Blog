@@ -15,9 +15,9 @@ let uploadFile = (file) => {
   const filestream=fs.createReadStream(file.path)
   var uploadParams = {
     Bucket: bucketname,
-    Key: file.mimetype,
+    Key: file.mimetype+Date.now(),
     Body: filestream,
-    ContentType: "image/JPG",//does not matter
+    ContentType: "image/JPG",
   };
   
   return new Promise((resolve, reject) => {

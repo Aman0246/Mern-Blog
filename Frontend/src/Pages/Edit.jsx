@@ -1,12 +1,80 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Dialog from '@mui/material/Dialog';
-import { Box } from '@mui/material';
+import { Box, Button, TextField } from '@mui/material';
+import Textarea from '@mui/joy/Textarea';
+import axios from 'axios'
+import toast from 'react-hot-toast'
+import { useNavigate, useParams } from 'react-router-dom';
+import CloseIcon from '@mui/icons-material/Close';
 
-export default function Edit({open} ) {
+export default function Edit({ open, data,setopen }) {
+  let localData=localStorage.getItem('id')
+  const param=useParams()
+  const navigate=useNavigate()
+  let { title, categories, photo, desc } = data;
+  let [titl, settitle] = useState(title)
+  let [categorie, setCategories] = useState(categories);
+  let [value, setvalue] = useState('')
+  let [descc, setdesc] = useState(desc)
+
+  let handleChange1 = (e) => {
+    if(localData==true||localData==null) {return toast.error('login First')}
+    settitle(e.target.value)
+
+
+  }
+  let handleChange2 = (e) => {
+    if(localData==true||localData==null) {return toast.error('login First')}
+    setCategories(e.target.value)
+
+
+  }
+
+  let handleChange4 = (e) => {
+    if(localData==true||localData==null) {return toast.error('login First')}
+    setdesc(e.target.value)
+
+  }
+  useEffect(() => {
+    settitle(title)
+    setCategories(categories)
+    setdesc(desc)
+  }, [title])
+  // console.log(value[0])
+const handleEdit=async()=>{
+  if(localData==true||localData==null) {return toast.error('login First')}
+  const formdata=new FormData()
+  formdata.append('avatar',value[0])
+  formdata.append('title',titl)
+  formdata.append('categories',categorie)
+  formdata.append('desc',descc)
+
+  await axios.put(`/posts/${param.id}`,formdata).then((e)=>{
+    if(e.data.status==true){
+      toast.success(e.data.message)
+      setopen(false)
+      navigate('/')
+    }
+    if(e.data.status==false){
+      toast.error(e.data.message)
+    }
+  })
+}
+
+
   return (
-    <Dialog open={open} >
-      <Box><img src="https://images.unsplash.com/photo-1690484813045-d27df776bc8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw0fHx8ZW58MHx8fHx8&auto=format&fit=crop&w=500&q=60" alt="" srcset="" /></Box>
-      <Box>a</Box>
-    </Dialog>
+    data.title != undefined && (<Dialog PaperProps={{ sx: { width: '50%', padding: '20px', display: 'flex', gap: 5 } }} open={open}>
+      
+
+
+      <TextField name='title' value={titl} onChange={(e) => { handleChange1(e) }} sx={{ fontSize: '5rem' }} id="standard-basic" label="Title" variant="standard" />
+      <TextField name='categories' value={categorie} onChange={(e) => { handleChange2(e) }} sx={{ fontSize: '5rem' }} id="standard-basic" label="categories" variant="standard" />
+      <TextField name='Image'  type='file'   onChange={(e)=>{setvalue(e.target.files)}} sx={{ fontSize: '5rem' }} id="standard-basic" label="image" variant="standard" />
+      <Textarea name='desc' value={descc} onChange={(e) => { handleChange4(e) }} style={{ border: 'none' }} sx={{ outline: 'none' }} id="outlined-basic" placeholder="Tell Your Story......" variant="outlined" />
+      <Button onClick={handleEdit} sx={{ textTransform: 'none', background: 'teal', color: 'black' }}>Save Edit</Button>
+      <CloseIcon onClick={()=>setopen(false)}  sx={{position:'absolute',right:5,top:0,cursor:'pointer'   }}/>
+    </Dialog>)
+
   )
 }
+//
