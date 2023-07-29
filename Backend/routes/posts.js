@@ -1,20 +1,33 @@
 const router = require("express").Router();
 const User = require("../models/User");
 const Post = require("../models/Post");
-const {verifyToken}=require('../JWT/Verify')
+const {verifyToken}=require('../JWT/Verify');
+const { uploadFile } = require("../AWS/aws");
 //CREATE POST
-router.post("/", async (req, res) => {
-    const {title,desc}=req.body
-    if(!title) return res.send({status:false,message:'title needed'})
-    if(!desc) return res.send({status:false,message:'description needed'})
+router.post("/",verifyToken ,async (req, res) => {
+  console.log("req.userId",req.userId)
+  
+  try {
+    if(req.file!=undefined){
+      let awsUrl = await uploadFile(req.file);
+      const user = await Post.create({
+        title: req.body.title,
+        desc: req.body.desc,
+        photo:awsUrl,
+        categories: req.body.categories,
+        userId:req.userId
+      });
+      return res
+      .status(200)
+      .send({status:true,message:'Post Created',data:user})
 
-    const newPost = new Post(req.body);
-    try {
-      const savedPost = await newPost.save();
-       res.send({status:false,message:'Post Created',data:savedPost})
-    } catch (err) {
-      res.status(500).json(err);
     }
+    
+  } catch (error) {
+    res.status(500).json(error);
+  }
+
+ 
   });
   
   //UPDATE POST

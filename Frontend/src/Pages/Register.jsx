@@ -9,11 +9,11 @@ import toast from 'react-hot-toast'
 export default function Register() {
   const [inputs,setinputs]=useState('')
   let [value,setvalue]=useState("")
+  const navigate=useNavigate()
 const handleChange=(e)=>{
   setinputs({...inputs,[e.target.name]:e.target.value})
 }
 const handlesubmit=async(e)=>{
-  const navigate=useNavigate()
   e.preventDefault();
   let formData=new FormData()
   formData.append('avatar',value[0])

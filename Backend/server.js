@@ -7,11 +7,13 @@ const userRoute = require("./routes/users");
 const postRoute = require("./routes/posts");
 const categoryRoute = require("./routes/categories");
 const mongoose = require("mongoose");
+var cookieParser = require('cookie-parser')
 dotenv.config();
 var cors = require("cors");
 app.use(express.json());
 app.use(cors({ origin: process.env.CORSORIGIN, credentials: true }));
 app.use(express.urlencoded({extended:false}))
+app.use(cookieParser())
 
 mongoose
   .connect(process.env.MONGOCONNECT)
