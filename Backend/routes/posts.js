@@ -5,17 +5,23 @@ const {verifyToken}=require('../JWT/Verify');
 const { uploadFile } = require("../AWS/aws");
 //CREATE POST
 router.post("/",verifyToken ,async (req, res) => {
-  console.log("req.userId",req.userId)
+ 
   
   try {
     if(req.file!=undefined){
+      let userfound=await User.findOne({_id:req.userId})
+      if(!userfound)return res.send({status:false,message:"usenotFound"})
+      console.log(userfound)
       let awsUrl = await uploadFile(req.file);
       const user = await Post.create({
         title: req.body.title,
         desc: req.body.desc,
         photo:awsUrl,
         categories: req.body.categories,
-        userId:req.userId
+        userId:req.userId,
+        username:userfound.username,
+        profilePic:req.body.profilePic
+        
       });
       return res
       .status(200)
@@ -24,7 +30,7 @@ router.post("/",verifyToken ,async (req, res) => {
     }
     
   } catch (error) {
-    res.status(500).json(error);
+    res.send({status:false,message:'crashed'})
   }
 
  
@@ -33,36 +39,47 @@ router.post("/",verifyToken ,async (req, res) => {
   //UPDATE POST
   router.put("/:id",verifyToken, async (req, res) => {
     try {
+      
+      console.log(req.params.id)
       const post = await Post.findById(req.params.id);
-      if (post.userId === req.userId) {
-        try {
-          const updatedPost = await Post.findByIdAndUpdate(
-            req.params.id,
-            {
-              $set: req.body,
-            },
-            { new: true }
-          );
-          res.status(200).send({status:true,message:"update ok",data:updatedPost})
-        } catch (err) {
-          res.status(500).json(err);
-        }
-      } else {
-        
-        res.send({status:false,message:"You can update only your post!"})
+      if (post.userId != req.userId)return res.send({status:false,message:'Not Authorised'})
+      if(req.file==undefined){
+            const updatedPost = await Post.findByIdAndUpdate(
+              req.params.id,
+              {
+                $set: req.body,
+              },
+              { new: true }
+            );
+            res.send({ status: true, message: 'Post updated successfully', data: updatedPost });
+          
       }
-    } catch (err) {
-      res.status(500).json(err);
+      if(req.file!=undefined){
+        let awsUrl = await uploadFile(req.file);
+            const updatedPost = await Post.findByIdAndUpdate(
+              req.params.id,
+              {
+                $set: { ...req.body, photo: awsUrl },
+              },
+              { new: true }
+            );
+            res.send({ status: true, message: 'Post updated successfully', data: updatedPost });
+      }
+
+    } catch (error) {
+      res.send({status:false,message:'crashed'})
     }
   });
   
   //DELETE POST
-  router.delete("/:id", async (req, res) => {
+  router.delete("/:id",verifyToken, async (req, res) => {
     try {
       const post = await Post.findById(req.params.id);
+      console.log(post.userId==req.userId)
+      console.log(post.userId,req.userId)
       if (post.userId === req.userId) {
         try {
-          await post.delete();
+          await Post.findByIdAndDelete({_id:post._id})
           res.send({status:true,message:"Post has been deleted..."})
         } catch (err) {
           res.status(500).json(err);
@@ -71,7 +88,7 @@ router.post("/",verifyToken ,async (req, res) => {
         res.send({status:false,message:"You can delete only your post!"})
       }
     } catch (err) {
-      res.status(500).json(err);
+      res.send({status:false,message:'crashed'})
     }
   });
   
@@ -81,12 +98,13 @@ router.post("/",verifyToken ,async (req, res) => {
       const post = await Post.findById(req.params.id);
       res.send({status:true,message:"post by id",data:post})
     } catch (err) {
-      res.status(500).json(err);
+      res.send({status:false,message:'crashed'})
     }
   });
   
   //GET ALL POSTS
   router.get("/", async (req, res) => {
+    console.log('hellow')
     const username = req.query.user;
     const catName = req.query.cat;
     try {
@@ -104,7 +122,7 @@ router.post("/",verifyToken ,async (req, res) => {
       }
       res.send({status:true,message:"post are here",data:posts})
     } catch (err) {
-      res.status(500).json(err);
+      res.send({status:false,message:'crashed'})
     }
   });
 module.exports = router;
