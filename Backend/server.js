@@ -6,6 +6,7 @@ const authRoute = require("./routes/auth");
 const userRoute = require("./routes/users");
 const postRoute = require("./routes/posts");
 const categoryRoute = require("./routes/categories");
+const comments=require('./routes/comment')
 const mongoose = require("mongoose");
 var cookieParser = require('cookie-parser')
 dotenv.config();
@@ -39,6 +40,7 @@ const upload = multer({
 app.use("/api/auth",upload.single('avatar'), authRoute);//avatar== input name same
 app.use("/api/users",upload.single('avatar'), userRoute);
 app.use("/api/posts",upload.single('avatar'), postRoute);
+app.use("/api/comment", comments);
 app.use("/api/categories", categoryRoute);
 
 
