@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const User = require("../models/User");
 const Post = require("../models/Post");
+const {verifyToken}=require('../JWT/Verify')
 //CREATE POST
 router.post("/", async (req, res) => {
     const {title,desc}=req.body
@@ -17,10 +18,10 @@ router.post("/", async (req, res) => {
   });
   
   //UPDATE POST
-  router.put("/:id", async (req, res) => {
+  router.put("/:id",verifyToken, async (req, res) => {
     try {
       const post = await Post.findById(req.params.id);
-      if (post.username === req.body.username) {
+      if (post.userId === req.userId) {
         try {
           const updatedPost = await Post.findByIdAndUpdate(
             req.params.id,
@@ -46,7 +47,7 @@ router.post("/", async (req, res) => {
   router.delete("/:id", async (req, res) => {
     try {
       const post = await Post.findById(req.params.id);
-      if (post.username === req.body.username) {
+      if (post.userId === req.userId) {
         try {
           await post.delete();
           res.send({status:true,message:"Post has been deleted..."})

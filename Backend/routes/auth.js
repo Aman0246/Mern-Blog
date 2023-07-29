@@ -3,8 +3,10 @@ const User = require("../models/User");
 const { hassPassword, compare } = require("../Bcrypt/Bcrypt");
 const validator = require("validator");
 const { uploadFile } = require("../AWS/aws");
+const jwt =require ("jsonwebtoken")
 //REGISTER
 router.post("/register", async (req, res) => {
+  console.log(req.file,req.body)
   try {
     let CheckUser = await User.findOne({ email: req.body.email })
     if (CheckUser) {
@@ -48,6 +50,7 @@ router.post("/register", async (req, res) => {
 //LOGIN
 router.post("/login", async (req, res) => {
   try {
+    console.log("req.body")
     const user = await User.findOne({ email: req.body.email });
     if (!validator.isEmail(req.body.email)) {
       return res.status(200).send({ status: false, message: "invalid Email" });
@@ -58,13 +61,41 @@ router.post("/login", async (req, res) => {
     let checkPassword = await compare(req.body.password, user.password);
     if (!checkPassword)
       return res.status(200).send({ status: false, message: "Wrong Password" });
-
+      var token =jwt.sign({id:user._id},process.env.JWT)
+      res.cookie("access_token",token,{httpOnly:true}).send({status:true,message:"Login Successfull",data:foundUser,token:token})
     return res
       .status(200)
-      .send({ status: true, message: "Login ok", data: user });
+      .send({ status: true, message: "Login ok", data: user ,token:token });
   } catch (err) {
     res.status(500).json(err);
   }
 });
+
+//Google
+router.post("/google", async (req, res) => {
+try {
+     const user=await User.findOne({email:req.body.email})
+     if(user){
+      var token =jwt.sign({id:user._id},process.env.JWT)
+      res.cookie("access_token",token,{httpOnly:true}).send({status:true,message:"Login Successfull",data:user,token:token})
+     }
+  
+     else{
+      const newUser= new User({
+          ...req.body,
+          fromGoogle:true
+      })
+      await newUser.save();
+      const user=await User.findOne({email:req.body.email})
+      var token =jwt.sign({id:user._id},process.env.JWT)
+      res.cookie("access_token",token,{httpOnly:true}).send({status:true,message:"Login Successfull",data:user,token:token})
+
+     }
+     
+  } catch (err) {
+      console.log(err)
+  }
+
+})
 
 module.exports = router;
