@@ -8,13 +8,11 @@ const postRoute = require("./routes/posts");
 const categoryRoute = require("./routes/categories");
 const comments=require('./routes/comment')
 const mongoose = require("mongoose");
-var cookieParser = require('cookie-parser')
 dotenv.config();
 app.use(express.json());
 var cors = require('cors')
 app.use(cors({origin: true, credentials: true}));
 app.use(express.urlencoded({extended:false}))
-app.use(cookieParser())
 
 mongoose
   .connect(process.env.MONGOCONNECT)

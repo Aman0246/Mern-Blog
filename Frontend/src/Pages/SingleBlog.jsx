@@ -21,7 +21,7 @@ export default function SingleBlog() {
     
     if(deta==true||deta==null) {return toast.error('login First')}
     setLoading(true)
-    await axios.delete(`/posts/${params.id}`).then((e) => {
+    await axios.delete(`/posts/${params.id}`,{headers:{token:localStorage.getItem('token')}}).then((e) => {
       setLoading(false)
         if (e.data.status == true) {
         setdata('deleted')
@@ -39,7 +39,7 @@ export default function SingleBlog() {
     // console.log(params.id)
     let getsinglepost = async () => {
       setLoading(true)
-      await axios.get(`/posts/${params.id}`).then((e) => {
+      await axios.get(`/posts/${params.id}`,{headers:{token:localStorage.getItem('token')}}).then((e) => {
         setLoading(false)
         if (e.data.status == true) {
           setdata(e.data.data)

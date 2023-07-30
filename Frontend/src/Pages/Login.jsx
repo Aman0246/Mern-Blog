@@ -32,6 +32,7 @@ export default function Login() {
     setLoading(true)
     signInWithPopup(auth,provider).then((result)=>{
       axios.post("/auth/google",{username:result.user.displayName ,email:result.user.email,profilePic:result.user.photoURL}).then((e)=>{
+        localStorage.setItem('token',e.data.token)
         setLoading(false)
         if(e.data.status==true){
           toast.success(e.data.message)
@@ -53,6 +54,8 @@ export default function Login() {
     
     setLoading(true)
       await axios.post("/auth/login",{...inputs}).then((e)=>{
+        // console.log(e.data.token)
+        localStorage.setItem('token',e.data.token)
         setLoading(false)
         if(e.data.status==false){return toast.error(e.data.message)}
         if(e.data.status==true){

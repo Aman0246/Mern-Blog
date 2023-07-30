@@ -5,12 +5,10 @@ import Home from './Pages/Home';
 import Login from './Pages/Login'
 import Register from './Pages/Register'
 import axios from 'axios';
-
 import { Routes, Route } from "react-router-dom";
 import SingleBlog from './Pages/SingleBlog';
 import CreateBlog from './Pages/CreateBlog';
 import Contact from './Pages/Contact/Contact';
-import Cp from './CircularProgress/Cp';
 axios.defaults.baseURL = import.meta.env.VITE_PORT;
 axios.defaults.withCredentials = true;
 

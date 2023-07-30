@@ -13,7 +13,7 @@ const handleDeleteComment=async(e)=>{
   if(data==true||data==null) {return toast.error('login First')}
   // console.log(localStorage.getItem('id'))
   setLoading(true)
-  await axios.delete(`/comment/${e}/${params.id}`).then((e)=>{
+  await axios.delete(`/comment/${e}/${params.id}`,{headers:{token:localStorage.getItem('token')}}).then((e)=>{
     if(e.data.status==true){toast.success(e.data.message)
       setLoading(false)
     }
