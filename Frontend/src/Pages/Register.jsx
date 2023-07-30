@@ -7,7 +7,7 @@ import axios from 'axios'
 import toast from 'react-hot-toast'
 import CircularProgress from '@mui/joy/CircularProgress';
 export default function Register() {
-  const[loading,setLoading]=useState(true)
+  const[loading,setLoading]=useState(false)
   const [inputs,setinputs]=useState('')
   let [value,setvalue]=useState("")
   const navigate=useNavigate()
