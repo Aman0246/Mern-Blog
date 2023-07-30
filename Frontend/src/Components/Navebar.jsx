@@ -19,6 +19,7 @@ export default function Navebar() {
     localStorage.clear('persist:root')
     localStorage.clear('id')
     localStorage.clear('FeatureFlags')
+    localStorage.clear('token')
     dispatch(logout('a'))
   }
   // console.log(selector)
