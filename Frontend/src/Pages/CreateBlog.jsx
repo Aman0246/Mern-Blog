@@ -2,13 +2,14 @@ import { Box, Input, InputLabel, TextField } from '@mui/material'
 import React, { useState } from 'react'
 import Button from '@mui/joy/Button';
 import { Link, useNavigate } from 'react-router-dom';
-
+import CircularProgress from '@mui/joy/CircularProgress';
 import Textarea from '@mui/joy/Textarea';
 import toast from 'react-hot-toast';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 
 export default function CreateBlog() {
+    const[loading,setLoading]=useState(false)
     const selector=useSelector(state=>state)
     let data=localStorage.getItem('id')
     // console.log(data)
@@ -22,6 +23,7 @@ export default function CreateBlog() {
         setinputs({...inputs,[e.target.name]:e.target.value})
       }
       const handlePublish= async()=>{
+        setLoading(true)
         if(data==true||data==null) {return toast.error('login First')}
             if(inputs.title==undefined||inputs.categories==undefined||inputs.desc==undefined||image[0]==undefined||image[0].length==0||inputs.title.length==0||inputs.categories.length==0||inputs.desc.length==0){
            return alert('please fill all Inputs')  
@@ -34,6 +36,7 @@ export default function CreateBlog() {
          formdata.append('profilePic',selector.user.profilePic)
              
          await axios.post('/posts/',formdata).then((e)=>{
+            setLoading(false)
             if(e.data.status==true){
                 toast.success(e.data.message)
                 navigate('/')
@@ -46,6 +49,7 @@ export default function CreateBlog() {
       }
     return (
         <Box sx={{ marginTop: '5rem',marginX: '20px',display:'flex',flexDirection:'column',gap:2 ,alignItems:'Left'}}>
+             {loading&&<Box sx={{position:'absolute'}}><CircularProgress variant="solid" /></Box>} 
             <Box sx={{display:'flex',width:'100%',justifyContent:'center',alignItems:'center'}}>
 
             

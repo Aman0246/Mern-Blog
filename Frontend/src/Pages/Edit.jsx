@@ -3,11 +3,13 @@ import Dialog from '@mui/material/Dialog';
 import { Box, Button, TextField } from '@mui/material';
 import Textarea from '@mui/joy/Textarea';
 import axios from 'axios'
+import CircularProgress from '@mui/joy/CircularProgress';
 import toast from 'react-hot-toast'
 import { useNavigate, useParams } from 'react-router-dom';
 import CloseIcon from '@mui/icons-material/Close';
 
 export default function Edit({ open, data,setopen }) {
+  const[loading,setLoading]=useState(false)
   let localData=localStorage.getItem('id')
   const param=useParams()
   const navigate=useNavigate()
@@ -42,6 +44,7 @@ export default function Edit({ open, data,setopen }) {
   }, [title])
   // console.log(value[0])
 const handleEdit=async()=>{
+  setLoading(true)
   if(localData==true||localData==null) {return toast.error('login First')}
   const formdata=new FormData()
   formdata.append('avatar',value[0])
@@ -50,6 +53,7 @@ const handleEdit=async()=>{
   formdata.append('desc',descc)
 
   await axios.put(`/posts/${param.id}`,formdata).then((e)=>{
+    setLoading(false)
     if(e.data.status==true){
       toast.success(e.data.message)
       setopen(false)
@@ -66,7 +70,7 @@ const handleEdit=async()=>{
     data.title != undefined && (<Dialog PaperProps={{ sx: { width: '50%', padding: '20px', display: 'flex', gap: 5 } }} open={open}>
       
 
-
+      {loading&&<Box sx={{position:'absolute'}}><CircularProgress variant="solid" /></Box>} 
       <TextField name='title' value={titl} onChange={(e) => { handleChange1(e) }} sx={{ fontSize: '5rem' }} id="standard-basic" label="Title" variant="standard" />
       <TextField name='categories' value={categorie} onChange={(e) => { handleChange2(e) }} sx={{ fontSize: '5rem' }} id="standard-basic" label="categories" variant="standard" />
       <TextField name='Image'  type='file'   onChange={(e)=>{setvalue(e.target.files)}} sx={{ fontSize: '5rem' }} id="standard-basic" label="image" variant="standard" />

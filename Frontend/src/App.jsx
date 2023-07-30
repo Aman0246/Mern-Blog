@@ -10,6 +10,7 @@ import { Routes, Route } from "react-router-dom";
 import SingleBlog from './Pages/SingleBlog';
 import CreateBlog from './Pages/CreateBlog';
 import Contact from './Pages/Contact/Contact';
+import Cp from './CircularProgress/Cp';
 axios.defaults.baseURL = import.meta.env.VITE_PORT;
 axios.defaults.withCredentials = true;
 
@@ -18,7 +19,9 @@ function App() {
   return (
     <>
       <Navebar></Navebar>
+     
       <Routes>
+        {/* <Route path='/' element={ <Cp/>}/> */}
         <Route path='/' element={<Home/>}/>
         <Route path='/blog/:id' element={<SingleBlog/>}/>
         <Route path='/login' element={<Login/>}/>
