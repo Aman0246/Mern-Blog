@@ -76,7 +76,7 @@ const reference=useRef()
 
     return (
         <Dialog PaperProps={{ sx: { width: '150vh', maxWidth: '150vh', height: '80vh' } }} open={comment}>
-            <Box sx={{ display: 'flex', height: '80vh' }}>
+            <Box sx={{ display: 'flex', height: '80vh','@media (max-width: 809px)':{flexDirection:'column',gap:'2'} }}>
               {loading&&<Box sx={{position:'absolute'}}><CircularProgress variant="solid" /></Box>} 
                 <Box sx={{ flex: 2.5, padding: '10px', overflow: 'scroll' }}> <img style={{ width: '100%', borderRadius: '10px', height: '100%' }} src={data.photo} alt="Dp" /> </Box>
                 <Box sx={{ flex: 2, padding: "10px", height: '80vh', overflow: 'scroll', display: 'flex' }}>
@@ -97,7 +97,7 @@ const reference=useRef()
                             ))}
                             <Box sx={{mt:"20px"}} ref={reference}></Box>
                         </Box>
-                        <Box sx={{ display: 'flex', gap: 2, flex: 1, alignItems: 'center', height: '20%' }}>
+                        <Box sx={{ display: 'flex', gap: 2, flex: 1, alignItems: 'center', height: '20%','@media (max-width: 395px)':{flexDirection:'column',gap:'2'}  }}>
                             <Box sx={{ flex: 6 }}><Input value={inputs} sx={{ width: "100%" }} onChange={(e) => handleChange(e)} name='desc' placeholder="Add Comment..." variant="solid" /></Box>
                             <Box sx={{ flex: 1 }}>
 
