@@ -24,7 +24,7 @@ export default function Home() {
   return (
     <Box sx={{position:'relative'}}>
        {loading&&<Box sx={{position:'absolute'}}><CircularProgress variant="solid" /></Box>} 
-      <Box sx={{width:'100%'}}><img style={{width:'100%',height:'110vh',position:'fixed',zIndex:-1}} src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGJsb2d8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60" alt="Background"  /></Box>
+      <Box sx={{width:'100%'}}><img style={{width:'100%',height:'130vh',position:'fixed',zIndex:-1}} src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGJsb2d8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60" alt="Background"  /></Box>
       <Box sx={{display:'flex',flexWrap:'wrap',justifyContent:'center',paddingTop:'10rem'}}>
         
 
