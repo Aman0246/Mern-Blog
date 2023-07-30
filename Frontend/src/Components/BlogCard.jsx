@@ -16,8 +16,8 @@ export default function BlogCard({e}) {
 
     return (
         <Box  sx={{ marginX: '3rem', background: '',width:'25rem',paddingY:'20px',cursor:'pointer'}}>
-            <Card sx={{ color: 'black', background: '#d7e3ed' }} >
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingX: '10px', background: '#d7e3ed' }}>
+            <Card sx={{ color: 'black', background: '#d7e3ed','@media (max-width: 863px)':{marginLeft:'3rem'},'@media (max-width: 272px)':{marginLeft:'10rem'} }} >
+                <Box sx={{ display: 'flex', justifyContent: 'space-between' , alignItems: 'center', paddingX: '10px', background: '#d7e3ed' }}>
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
 
                         <Box>

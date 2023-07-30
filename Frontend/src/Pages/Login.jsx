@@ -62,7 +62,7 @@ export default function Login() {
   }
   return (
     <Box sx={{height:'100vh',justifyContent:'center',alignItems:'center',display:'flex',backgroundImage:'url(https://images.unsplash.com/photo-1499750310107-5fef28a66643?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80)'}}>
-      <Box sx={{backgroundColor:'white',opacity:.8,width:'30%',paddingBottom:5}}>
+      <Box sx={{backgroundColor:'white',opacity:.8,width:'30%','@media (max-width:763px)': {width:'80%'},paddingBottom:5}}>
         <Box sx={{display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center',gap:5}}>
         <TextField sx={{marginTop:5,width:'60%'}} name='Email' onChange={(e)=>{handleChange(e)}} type='email' color='success' id="standard-basic" label="Email" variant="standard" />
         <TextField sx={{width:'60%'}} color='success' name='password' onChange={(e)=>{handleChange(e)}} type='Password' id="standard-basic" label="Password" variant="standard" />
