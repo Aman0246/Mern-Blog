@@ -11,9 +11,9 @@ export default function CommentCard({e,seta,a}) {
   let params=useParams()
 const handleDeleteComment=async(e)=>{
   if(data==true||data==null) {return toast.error('login First')}
-  console.log(localStorage.getItem('id'))
+  // console.log(localStorage.getItem('id'))
+  setLoading(true)
   await axios.delete(`/comment/${e}/${params.id}`).then((e)=>{
-    setLoading(true)
     if(e.data.status==true){toast.success(e.data.message)
       setLoading(false)
     }

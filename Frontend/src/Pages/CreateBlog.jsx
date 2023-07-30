@@ -23,7 +23,7 @@ export default function CreateBlog() {
         setinputs({...inputs,[e.target.name]:e.target.value})
       }
       const handlePublish= async()=>{
-        setLoading(true)
+       
         if(data==true||data==null) {return toast.error('login First')}
             if(inputs.title==undefined||inputs.categories==undefined||inputs.desc==undefined||image[0]==undefined||image[0].length==0||inputs.title.length==0||inputs.categories.length==0||inputs.desc.length==0){
            return alert('please fill all Inputs')  
@@ -34,7 +34,7 @@ export default function CreateBlog() {
          formdata.append('categories',inputs.categories)
          formdata.append('desc',inputs.desc)
          formdata.append('profilePic',selector.user.profilePic)
-             
+         setLoading(true)
          await axios.post('/posts/',formdata).then((e)=>{
             setLoading(false)
             if(e.data.status==true){

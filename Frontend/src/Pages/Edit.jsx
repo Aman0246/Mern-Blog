@@ -44,14 +44,14 @@ export default function Edit({ open, data,setopen }) {
   }, [title])
   // console.log(value[0])
 const handleEdit=async()=>{
-  setLoading(true)
   if(localData==true||localData==null) {return toast.error('login First')}
   const formdata=new FormData()
   formdata.append('avatar',value[0])
   formdata.append('title',titl)
   formdata.append('categories',categorie)
   formdata.append('desc',descc)
-
+  
+  setLoading(true)
   await axios.put(`/posts/${param.id}`,formdata).then((e)=>{
     setLoading(false)
     if(e.data.status==true){
