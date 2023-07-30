@@ -19,12 +19,12 @@ export default function Home() {
   },[dispatch])
   return (
     <Box sx={{position:'relative'}}>
-      <Box sx={{width:'100%'}}><img style={{width:'100%',height:'70vh',position:'fixed',zIndex:-1}} src="https://images.unsplash.com/3/doctype-hi-res.jpg?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1165&q=80" alt="Background"  /></Box>
+      <Box sx={{width:'100%'}}><img style={{width:'100%',height:'110vh',position:'fixed',zIndex:-1}} src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGJsb2d8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60" alt="Background"  /></Box>
       <Box sx={{display:'flex',flexWrap:'wrap',justifyContent:'center',paddingTop:'10rem'}}>
         
 
         {selector.map((e)=>
-        <Box key={e._id}>
+        <Box  key={e._id}>
           <Link to={`/blog/${e._id}`} style={{textDecoration:'none'}}>
           <BlogCard e={e}></BlogCard>
           </Link>
