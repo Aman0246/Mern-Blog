@@ -31,7 +31,7 @@ const reference=useRef()
         setinputs(e.target.value)
         Setcomment({ ...Comments, [e.target.name]: e.target.value })
     }
-console.log(Comments)
+// console.log(Comments)
     const handlePost = async () => {
         if (!localStorage.getItem('id')) { return toast.error("Please Login") }
         if (Comments.desc == undefined || Comments.desc?.length == 0) {
@@ -40,7 +40,7 @@ console.log(Comments)
         
         await axios.post('/comment', Comments).then((e) => {
             setcommentdata(e.data.data)
-            console.log(e.data.data)
+            // console.log(e.data.data)
             if (e.data.status == true) {
                 return toast.success(e.data.message)
             }
@@ -61,9 +61,9 @@ console.log(Comments)
         }
         allcomment()
         reference.current?.scrollIntoView()
-    },[a])
+    },[a,arrayComment&&arrayComment.length])
     
-    console.log(arrayComment)
+    // console.log(arrayComment)
 
 
 
@@ -86,7 +86,7 @@ console.log(Comments)
                         <Box sx={{ height: '60%', overflow: 'scroll', flex: 10 }} >
                         {arrayComment&&arrayComment.map((e)=>(
 
-                            <CommentCard e={e} />
+                            <CommentCard e={e} seta={seta} a={a} />
                             ))}
                             <Box sx={{mt:"20px"}} ref={reference}></Box>
                         </Box>

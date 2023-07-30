@@ -29,10 +29,10 @@ export default function Navebar() {
               
                   <Box sx={{display:'flex',gap:5}}>
                     <Box><Link to={'/'} style={{textDecoration:'none',color:'black'}}>HOME</Link> </Box>
-                    <Box sx={{cursor:'pointer'}}>ABOUT</Box>
-                    <Box sx={{cursor:'pointer'}}>CONTACT</Box> 
-                    <Box> <Link to={'/create'} style={{textDecoration:'none',color:'black'}}>WRITE</Link></Box>
-                    {selector.email?<Box onClick={handleLogout} style={{textDecoration:'none',color:'black',cursor:'pointer'}}>LogOut</Box>:<Box> <Link to={'/login'} style={{textDecoration:'none',color:'black'}}>Login</Link></Box>}
+                    <Box><Link to={'/contact'} style={{textDecoration:'none',color:'black'}}>CONTACT</Link> </Box>
+    
+                    <Box> <Link to={'/create'} style={{textDecoration:'none',color:'black',textTransform:'uppercase'}}>Create Blog</Link></Box>
+                    {selector.email?<Box onClick={handleLogout} style={{textDecoration:'none',color:'black',cursor:'pointer',textTransform:'uppercase'}}>LogOut</Box>:<Box> <Link to={'/login'} style={{textDecoration:'none',color:'black'}}>Login</Link></Box>}
                     
                     
                   </Box>
@@ -40,7 +40,7 @@ export default function Navebar() {
                     {selector&&
                     <Box>{selector.username}</Box>}
 
-                    <Box>{selector.email?<img style={{width:'2rem',borderRadius:'50%'}} src={selector.profilePic} alt="Dp"/>:<AccountCircleIcon  sx={{width:'2rem',height:'2rem'}}/>}</Box>
+                    <Box>{selector.email?<img style={{width:'2rem',borderRadius:'50%'}} src={selector.profilePic} alt="Dp"/>:<Link to={'/login'}><AccountCircleIcon  sx={{width:'2rem',height:'2rem'}}/></Link>}</Box>
                   </Box>
             </Box>
         </Toolbar>
