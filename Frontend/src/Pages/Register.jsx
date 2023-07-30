@@ -16,12 +16,12 @@ const handleChange=(e)=>{
 }
 const handlesubmit=async(e)=>{
   e.preventDefault();
-  setLoading(true)
   let formData=new FormData()
   formData.append('avatar',value[0])
   formData.append('username',inputs.username)
   formData.append('email',inputs.email)
   formData.append('password',inputs.password)
+  setLoading(true)
   await axios.post("/auth/register",formData).then((data)=>{
     setLoading(false)
     // console.log(data)

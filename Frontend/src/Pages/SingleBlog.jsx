@@ -19,8 +19,8 @@ export default function SingleBlog() {
   const navigate = useNavigate()
   const handleDelete = async () => {
     
-    setLoading(true)
     if(deta==true||deta==null) {return toast.error('login First')}
+    setLoading(true)
     await axios.delete(`/posts/${params.id}`).then((e) => {
       setLoading(false)
         if (e.data.status == true) {

@@ -35,12 +35,12 @@ const reference=useRef()
     }
 // console.log(Comments)
     const handlePost = async () => {
-        setLoading(true)
         if (!localStorage.getItem('id')) { return toast.error("Please Login") }
         if (Comments.desc == undefined || Comments.desc?.length == 0) {
             return toast.error("Add Comment")
         }
         
+        setLoading(true)
         await axios.post('/comment', Comments).then((e) => {
             setLoading(false)
             setcommentdata(e.data.data)

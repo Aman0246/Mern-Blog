@@ -28,8 +28,8 @@ export default function Login() {
     setinputs({...inputs,[e.target.name]:e.target.value})
   }
   const signInWithGoogle=()=>{
+    
     setLoading(true)
-  
     signInWithPopup(auth,provider).then((result)=>{
       axios.post("/auth/google",{username:result.user.displayName ,email:result.user.email,profilePic:result.user.photoURL}).then((e)=>{
         setLoading(false)
@@ -47,11 +47,11 @@ export default function Login() {
       })
     }).catch((e)=>{console.log(e)})}
   const handleLogin=async()=>{
-    setLoading(true)
     if(inputs && inputs.Email==0 || inputs.password.length==0){
       return  toast.error("Empty Field")
     }
-  
+    
+    setLoading(true)
       await axios.post("/auth/login",{...inputs}).then((e)=>{
         setLoading(false)
         if(e.data.status==false){return toast.error(e.data.message)}
