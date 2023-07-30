@@ -7,7 +7,7 @@ import CircularProgress from '@mui/joy/CircularProgress';
 import { allBlog } from '../Redux/allBlogs'
 import { useDispatch, useSelector} from 'react-redux'
 export default function Home() {
-  const[loading,setLoading]=useState(true)
+  const[loading,setLoading]=useState(false)
   const dispatch = useDispatch()
   const selector=useSelector(state=>state.allBlog)
 
