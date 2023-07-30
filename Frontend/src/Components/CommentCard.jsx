@@ -2,8 +2,10 @@ import { Box, Typography } from '@mui/material'
 import React from 'react'
 
 export default function CommentCard({e}) {
-  console.log(e)
+  // console.log(e)
   return (
+
+
     <Box sx={{width:'100%',display:'flex',gap:2,paddingBottom:1,borderBottom:'1px solid #4c4a4a',background:'gray',paddingTop:'5px',paddingLeft:'5px'}}>
          
     <Box>
@@ -16,5 +18,6 @@ export default function CommentCard({e}) {
         <Typography  sx={{ fontSize:'15px',wordSpacing:5,marginTop:2,color:'black'}}>{e&&e.desc}</Typography>
     </Box>
 </Box>
+   
   )
 }
