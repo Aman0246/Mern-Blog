@@ -1,19 +1,25 @@
 import { Box, Typography } from '@mui/material'
-import React from 'react'
+import React, { useState } from 'react'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { useNavigate, useParams } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import axios from 'axios'
+import CircularProgress from '@mui/joy/CircularProgress';
 export default function CommentCard({e,seta,a}) {
+  const[loading,setLoading]=useState(false)
   let data=localStorage.getItem('id')
   let params=useParams()
 const handleDeleteComment=async(e)=>{
   if(data==true||data==null) {return toast.error('login First')}
   console.log(localStorage.getItem('id'))
   await axios.delete(`/comment/${e}/${params.id}`).then((e)=>{
-    if(e.data.status==true){toast.success(e.data.message)}
+    setLoading(true)
+    if(e.data.status==true){toast.success(e.data.message)
+      setLoading(false)
+    }
     
-    if(e.data.status==false){toast.error(e.data.message)}
+    if(e.data.status==false){toast.error(e.data.message)
+      setLoading(false)}
 
     seta(!a)
 
@@ -25,6 +31,7 @@ const handleDeleteComment=async(e)=>{
 
 
     <Box sx={{width:'100%',display:'flex',gap:2,paddingBottom:1,borderBottom:'1px solid #4c4a4a',background:'gray',paddingTop:'5px',paddingLeft:'5px'}}>
+        {loading&&<Box sx={{position:'absolute'}}><CircularProgress variant="solid" /></Box>}  
          
     <Box>
             <img  style={{width:'2.5rem',height:'2.5rem',borderRadius:'50%'}} src={e&&e.profilePic} alt=""  />

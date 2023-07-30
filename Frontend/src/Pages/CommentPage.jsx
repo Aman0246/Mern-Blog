@@ -9,7 +9,9 @@ import { useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import axios from 'axios'
+import CircularProgress from '@mui/joy/CircularProgress';
 export default function CommentPage({ data, setcomment, comment }) {
+    const[loading,setLoading]=useState(false)
 const[a,seta]=useState(false)
 const reference=useRef()
     const params = useParams()
@@ -33,12 +35,14 @@ const reference=useRef()
     }
 // console.log(Comments)
     const handlePost = async () => {
+        setLoading(true)
         if (!localStorage.getItem('id')) { return toast.error("Please Login") }
         if (Comments.desc == undefined || Comments.desc?.length == 0) {
             return toast.error("Add Comment")
         }
         
         await axios.post('/comment', Comments).then((e) => {
+            setLoading(false)
             setcommentdata(e.data.data)
             // console.log(e.data.data)
             if (e.data.status == true) {
@@ -53,9 +57,11 @@ const reference=useRef()
     }
 
     useEffect(()=>{
+
         const allcomment=async()=>{
+            setLoading(true)
           await axios.get(`/comment/comment/${params.id}`).then((e)=>{
-          
+            setLoading(false)
             setArrayComment(e.data.data)
           })
         }
@@ -71,6 +77,7 @@ const reference=useRef()
     return (
         <Dialog PaperProps={{ sx: { width: '150vh', maxWidth: '150vh', height: '80vh' } }} open={comment}>
             <Box sx={{ display: 'flex', height: '80vh' }}>
+              {loading&&<Box sx={{position:'absolute'}}><CircularProgress variant="solid" /></Box>} 
                 <Box sx={{ flex: 2.5, padding: '10px', overflow: 'scroll' }}> <img style={{ width: '100%', borderRadius: '10px', height: '100%' }} src={data.photo} alt="Dp" /> </Box>
                 <Box sx={{ flex: 2, padding: "10px", height: '80vh', overflow: 'scroll', display: 'flex' }}>
                     <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%' }}>

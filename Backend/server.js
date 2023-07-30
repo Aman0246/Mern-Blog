@@ -37,11 +37,11 @@ const upload = multer({
   limits: { fileSize: 10 * 1024 * 1024 }, // 10 MB limit
 });
 //--------------------------------------------------------------
-app.use("/api/auth",upload.single('avatar'), authRoute);//avatar== input name same
-app.use("/api/users",upload.single('avatar'), userRoute);
-app.use("/api/posts",upload.single('avatar'), postRoute);
-app.use("/api/comment", comments);
-app.use("/api/categories", categoryRoute);
+app.use("/auth",upload.single('avatar'), authRoute);//avatar== input name same
+app.use("/users",upload.single('avatar'), userRoute);
+app.use("/posts",upload.single('avatar'), postRoute);
+app.use("/comment", comments);
+app.use("/categories", categoryRoute);
 
 
 app.listen(process.env.PORT, () => {
