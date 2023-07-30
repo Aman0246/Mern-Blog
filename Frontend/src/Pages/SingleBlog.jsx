@@ -23,7 +23,7 @@ export default function SingleBlog() {
         navigate('/')
       }
       if(e.data.status==false){
-        setdata('deleted')
+       
         toast.error(e.data.message)
         
       }
@@ -40,7 +40,7 @@ export default function SingleBlog() {
     }
     getsinglepost()
   },[])
-  // console.log(data)
+
   return (
     <Box sx={{marginTop:'10vh'}}>
       <Box title='Comments' sx={{position:'absolute',right:'20px',color:'#bc6565'}}><QuestionAnswerIcon onClick={()=>setcomment(true)}  sx={{cursor:'pointer',fontSize:'50px'}}/></Box>

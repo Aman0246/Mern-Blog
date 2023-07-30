@@ -35,10 +35,11 @@ router.get("/comment/:postid", async (req, res) => {
 
 
 // Delete a comment by ID
-router.delete("/:commentId/:ownerId",verifyToken ,async (req, res) => {
-    let commentdata=await Comment.findOne({_id:req.params.commentId})
-    let Post=await PostModel.findOne({_id:req.params.ownerId})
- if(req.userId==commentdata.userId||req.userId==Post._id){
+router.delete("/:commentId/:postId",verifyToken ,async (req, res) => {
+  let commentdata=await Comment.findOne({_id:req.params.commentId})
+  let Post=await PostModel.findOne({_id:req.params.postId}) 
+  if(req.userId==commentdata.userId||req.userId==Post.userId){
+  //  console.log(req.userId,commentdata.userId,Post.userId,req.userId)
 
      try {
          const deletedComment = await Comment.findByIdAndRemove(
