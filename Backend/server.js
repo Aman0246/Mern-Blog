@@ -10,10 +10,9 @@ const comments=require('./routes/comment')
 const mongoose = require("mongoose");
 var cookieParser = require('cookie-parser')
 dotenv.config();
-var cors = require("cors");
 app.use(express.json());
-app.use(cors({ origin:process.env.CORSORIGIN, credentials: true }));
-
+var cors = require('cors')
+app.use(cors({origin: true, credentials: true}));
 app.use(express.urlencoded({extended:false}))
 app.use(cookieParser())
 
