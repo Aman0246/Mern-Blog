@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Dialog from '@mui/material/Dialog';
 import { Box, Typography } from '@mui/material';
 import Input from '@mui/joy/Input';
@@ -11,8 +11,9 @@ import toast from 'react-hot-toast';
 import axios from 'axios'
 export default function CommentPage({ data, setcomment, comment }) {
 const[a,seta]=useState(false)
+const reference=useRef()
     const params = useParams()
-    
+    const [inputs,setinputs]=useState('')
     const [arrayComment,setArrayComment]=useState([])
     
     const [addCommentdata, setcommentdata] = useState()
@@ -27,10 +28,10 @@ const[a,seta]=useState(false)
     })
 
     const handleChange = (e) => {
-
+        setinputs(e.target.value)
         Setcomment({ ...Comments, [e.target.name]: e.target.value })
     }
-console.log(Comments.desc)
+console.log(Comments)
     const handlePost = async () => {
         if (!localStorage.getItem('id')) { return toast.error("Please Login") }
         if (Comments.desc == undefined || Comments.desc?.length == 0) {
@@ -47,7 +48,7 @@ console.log(Comments.desc)
                 return toast.error(e.data.message)
             }
         })
-        Setcomment({ ...Comments,[Comments.desc]:'' })
+        setinputs('')
         seta(!a)
     }
 
@@ -59,7 +60,7 @@ console.log(Comments.desc)
           })
         }
         allcomment()
-        
+        reference.current?.scrollIntoView()
     },[a])
     
     console.log(arrayComment)
@@ -86,10 +87,11 @@ console.log(Comments.desc)
                         {arrayComment&&arrayComment.map((e)=>(
 
                             <CommentCard e={e} />
-                        ))}
+                            ))}
+                            <Box sx={{mt:"20px"}} ref={reference}></Box>
                         </Box>
                         <Box sx={{ display: 'flex', gap: 2, flex: 1, alignItems: 'center', height: '20%' }}>
-                            <Box sx={{ flex: 6 }}><Input sx={{ width: "100%" }} onChange={(e) => handleChange(e)} name='desc' placeholder="Add Comment..." variant="solid" /></Box>
+                            <Box sx={{ flex: 6 }}><Input value={inputs} sx={{ width: "100%" }} onChange={(e) => handleChange(e)} name='desc' placeholder="Add Comment..." variant="solid" /></Box>
                             <Box sx={{ flex: 1 }}>
 
                                 <Button   onClick={handlePost}>comment</Button>
