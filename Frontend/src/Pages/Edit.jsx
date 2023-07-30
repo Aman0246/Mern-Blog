@@ -52,7 +52,7 @@ const handleEdit=async()=>{
   formdata.append('desc',descc)
   
   setLoading(true)
-  await axios.put(`/posts/${param.id}`,formdata).then((e)=>{
+  await axios.put(`/posts/${param.id}`,formdata,{headers:{token:localStorage.getItem('token')}}).then((e)=>{
     setLoading(false)
     if(e.data.status==true){
       toast.success(e.data.message)

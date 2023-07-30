@@ -35,7 +35,7 @@ export default function CreateBlog() {
          formdata.append('desc',inputs.desc)
          formdata.append('profilePic',selector.user.profilePic)
          setLoading(true)
-         await axios.post('/posts/',formdata).then((e)=>{
+         await axios.post('/posts/',formdata,{headers:{token:localStorage.getItem('token')}}).then((e)=>{
             setLoading(false)
             if(e.data.status==true){
                 toast.success(e.data.message)

@@ -41,7 +41,7 @@ const reference=useRef()
         }
         
         setLoading(true)
-        await axios.post('/comment', Comments).then((e) => {
+        await axios.post('/comment', Comments,{headers:{token:localStorage.getItem('token')}}).then((e) => {
             setLoading(false)
             setcommentdata(e.data.data)
             // console.log(e.data.data)
@@ -60,7 +60,7 @@ const reference=useRef()
 
         const allcomment=async()=>{
             setLoading(true)
-          await axios.get(`/comment/comment/${params.id}`).then((e)=>{
+          await axios.get(`/comment/comment/${params.id}`,{headers:{token:localStorage.getItem('token')}}).then((e)=>{
             setLoading(false)
             setArrayComment(e.data.data)
           })
