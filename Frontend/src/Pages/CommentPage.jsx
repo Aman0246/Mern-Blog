@@ -1,20 +1,80 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Dialog from '@mui/material/Dialog';
 import { Box, Typography } from '@mui/material';
 import Input from '@mui/joy/Input';
 import CloseIcon from '@mui/icons-material/Close';
 import Button from '@mui/joy/Button';
-
+import CommentCard from '../Components/CommentCard';
+import { useSelector } from 'react-redux'
+import { useNavigate, useParams } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import axios from 'axios'
 export default function CommentPage({ data, setcomment, comment }) {
-    console.log(comment)
-    return (
-        <Dialog PaperProps={{ sx: { width: '150vh', maxWidth: '150vh' } }} open={comment}>
-            <Box sx={{ display: 'flex' }}>
-                <Box sx={{ flex: 2.5, padding: '10px' }}> <img style={{ width: '100%', borderRadius: '10px', height: '100%' }} src={data.photo} alt="" srcset="" /> </Box>
-                <Box sx={{ background: 'green', flex: 2, padding: "10px" }}>
-                    <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%',width:'100%' }}>
+const[a,seta]=useState(false)
+    const params = useParams()
+    
+    const [arrayComment,setArrayComment]=useState([])
+    
+    const [addCommentdata, setcommentdata] = useState()
+        const selector = useSelector(state => state.user)
+    const [Comments, Setcomment] = useState({
+        userId:selector._id,
+        postId:params.id,
+        username:selector.username,
+        profilePic:selector.profilePic,
+        email: selector.email,
+        
+    })
 
-                        <Box sx={{ display: 'flex', justifyContent: 'space-between', paddingBottom: 1, alignItems: 'center', borderBottom: '1px solid red' }}>
+    const handleChange = (e) => {
+
+        Setcomment({ ...Comments, [e.target.name]: e.target.value })
+    }
+console.log(Comments.desc)
+    const handlePost = async () => {
+        if (!localStorage.getItem('id')) { return toast.error("Please Login") }
+        if (Comments.desc == undefined || Comments.desc?.length == 0) {
+            return toast.error("Add Comment")
+        }
+        
+        await axios.post('/comment', Comments).then((e) => {
+            setcommentdata(e.data.data)
+            console.log(e.data.data)
+            if (e.data.status == true) {
+                return toast.success(e.data.message)
+            }
+            if (e.data.status == false) {
+                return toast.error(e.data.message)
+            }
+        })
+        Setcomment({ ...Comments,[Comments.desc]:'' })
+        seta(!a)
+    }
+
+    useEffect(()=>{
+        const allcomment=async()=>{
+          await axios.get(`/comment/comment/${params.id}`).then((e)=>{
+          
+            setArrayComment(e.data.data)
+          })
+        }
+        allcomment()
+        
+    },[a])
+    
+    console.log(arrayComment)
+
+
+
+
+    return (
+        <Dialog PaperProps={{ sx: { width: '150vh', maxWidth: '150vh', height: '80vh' } }} open={comment}>
+            <Box sx={{ display: 'flex', height: '80vh' }}>
+                <Box sx={{ flex: 2.5, padding: '10px', overflow: 'scroll' }}> <img style={{ width: '100%', borderRadius: '10px', height: '100%' }} src={data.photo} alt="Dp" /> </Box>
+                <Box sx={{ flex: 2, padding: "10px", height: '80vh', overflow: 'scroll', display: 'flex' }}>
+                    <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
+
+                        <Box sx={{ display: 'flex', flex: 1, justifyContent: 'space-between', paddingBottom: 1, height: '10%', alignItems: 'center', borderBottom: '1px solid red' }}>
                             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
 
                                 <img src={data.profilePic} style={{ height: '2.5rem', width: '2.5rem', borderRadius: '50%' }} alt="owner Pic" srcset="" />
@@ -22,351 +82,18 @@ export default function CommentPage({ data, setcomment, comment }) {
                             </Box>
                             <CloseIcon onClick={() => setcomment(false)} sx={{ cursor: 'pointer' }} />
                         </Box>
-                        <Box>dasasdas
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                            das
-                        </Box>
-                        <Box sx={{ display: 'flex',gap:2,alignItems:'center'}}>
-                            <Box sx={{flex:6}}><Input sx={{ width:"100%" }} placeholder="Add Comment..." variant="solid" /></Box>
-                            <Box sx={{flex:1}}>
+                        <Box sx={{ height: '60%', overflow: 'scroll', flex: 10 }} >
+                        {arrayComment&&arrayComment.map((e)=>(
 
-                            <Button>Button</Button>
+                            <CommentCard e={e} />
+                        ))}
+                        </Box>
+                        <Box sx={{ display: 'flex', gap: 2, flex: 1, alignItems: 'center', height: '20%' }}>
+                            <Box sx={{ flex: 6 }}><Input sx={{ width: "100%" }} onChange={(e) => handleChange(e)} name='desc' placeholder="Add Comment..." variant="solid" /></Box>
+                            <Box sx={{ flex: 1 }}>
+
+                                <Button   onClick={handlePost}>comment</Button>
+                               
                             </Box>
 
                         </Box>
