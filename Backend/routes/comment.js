@@ -6,9 +6,10 @@ const { verifyToken } = require("../JWT/Verify");
 // Create a new comment
 
 router.post("/", async (req, res) => {
+  console.log(req.body)
   try {
-    const { userId, postId, desc } = req.body;
-    const newComment = new Comment({ userId, postId, desc });
+    const { userId, postId, desc,username,profilePic } = req.body;
+    const newComment = new Comment({ userId, postId, desc,username,profilePic});
     const savedComment = await newComment.save();
 
     res.send({ status: true, message: "comment added", data: savedComment });
@@ -16,6 +17,22 @@ router.post("/", async (req, res) => {
     res.send({ status: false, message: "Failed to create comment" });
   }
 });
+
+
+// get all comment of single Post
+
+router.get("/comment/:postid", async (req, res) => {
+  console.log(req.body)
+  try {
+    let allcomment =await Comment.find({postId:req.params.postid})
+    if(allcomment.length==0) return res.send({status:false,message:'no coomment found',postid:req.params.postid})
+    
+    res.send({ status: true, message: "all comment of post", data: allcomment });
+  } catch (error) {
+    res.send({ status: false, message: "Failed to get comment" });
+  }
+});
+
 
 // Delete a comment by ID
 router.delete("/:commentId/:ownerId",verifyToken ,async (req, res) => {
