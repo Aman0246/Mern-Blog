@@ -78,7 +78,7 @@ const reference=useRef()
         <Dialog PaperProps={{ sx: { width: '150vh', maxWidth: '150vh', height: '80vh' } }} open={comment}>
             <Box sx={{ display: 'flex', height: '80vh','@media (max-width: 809px)':{flexDirection:'column',gap:'2'} }}>
               {loading&&<Box sx={{position:'absolute'}}><CircularProgress variant="solid" /></Box>} 
-                <Box sx={{ flex: 2.5, padding: '10px', overflow: 'scroll' }}> <img style={{ width: '100%', borderRadius: '10px', height: '100%' }} src={data.photo} alt="Dp" /> </Box>
+                <Box sx={{ flex: 2.5, padding: '10px','@media (max-width:400px)':{display:'none'}, overflow: 'scroll' }}> <img style={{ width: '100%', borderRadius: '10px', height: '100%' }} src={data.photo} alt="Dp" /> </Box>
                 <Box sx={{ flex: 2, padding: "10px", height: '80vh', overflow: 'scroll', display: 'flex' }}>
                     <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
 
