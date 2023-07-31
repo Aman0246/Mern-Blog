@@ -40,7 +40,7 @@ router.post("/",verifyToken ,async (req, res) => {
   router.put("/:id",verifyToken, async (req, res) => {
     try {
       
-      console.log(req.params.id)
+      // console.log(req.params.id)
       const post = await Post.findById(req.params.id);
       if (post.userId != req.userId)return res.send({status:false,message:'Not Authorised'})
       if(req.file==undefined){
